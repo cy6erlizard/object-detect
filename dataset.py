@@ -184,7 +184,7 @@ class CocoDataset(torchvision.datasets.coco.CocoDetection):
             # class_id = self.map_source_class_id(
             #     "coco.{}".format(annotation['category_id']))
             class_id = annotation['category_id']
-            class_id += 1
+            class_id -= 1
             m = self.coco.annToMask(annotation)
             # Some objects are so small that they're less than 1 pixel area
             # and end up rounded out. Skip those objects.
