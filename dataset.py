@@ -184,20 +184,20 @@ class CocoDataset(torchvision.datasets.coco.CocoDetection):
             # class_id = self.map_source_class_id(
             #     "coco.{}".format(annotation['category_id']))
             class_id = annotation['category_id']
-           
+            class_id += 1
             m = self.coco.annToMask(annotation)
             # Some objects are so small that they're less than 1 pixel area
             # and end up rounded out. Skip those objects.
             if m.max() < 1:
                 continue
             # Is it a crowd? If so, use a negative class ID.
-            # if annotation['iscrowd']:
-            #     # Use negative class ID for crowds
-            #     class_id *= -1
-            #     # For crowd masks, annToMask() sometimes returns a mask
-            #     # smaller than the given dimensions. If so, resize it.
-            #     if m.shape[0] != image_info["height"] or m.shape[1] != image_info["width"]:
-            #         m = np.ones([image_info["height"], image_info["width"]], dtype=bool)
+            if annotation['iscrowd']:
+                # Use negative class ID for crowds
+                class_id *= -1
+                # For crowd masks, annToMask() sometimes returns a mask
+                # smaller than the given dimensions. If so, resize it.
+                if m.shape[0] != image_info["height"] or m.shape[1] != image_info["width"]:
+                    m = np.ones([image_info["height"], image_info["width"]], dtype=bool)
             instance_masks.append(m)
             class_ids.append(class_id)
 
