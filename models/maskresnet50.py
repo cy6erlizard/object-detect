@@ -99,6 +99,7 @@ class MaskResnet50(nn.Module):
                                                ('relu',resnet.relu),
                                                ('maxpool',resnet.maxpool)
                                                ]))
+        #lola want molla 
         
         self.layer1 = resnet.layer1
         self.layer2 = resnet.layer2
