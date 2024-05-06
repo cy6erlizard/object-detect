@@ -116,18 +116,29 @@ class MaskResnet50(nn.Module):
         with torch.no_grad():
             self.layer3[0].downsample[0].weight.copy_(save_weight)
 
-        for i in range(n_blocks[2]):
-            save_weight =  self.layer3[i].conv2.weight
+        # for i in range(n_blocks[2]):
+        #     save_weight =  self.layer3[i].conv2.weight
+        #     self.layer3[i].conv2 = nn.Conv2d(256,
+        #                                     256,
+        #                                     kernel_size=3,
+        #                                     stride=s[2] if i==0 else 1, 
+        #                                     padding=d[2],
+        #                                     dilation=d[2], 
+        #                                     bias=False)
+        #     with torch.no_grad():
+        #         self.layer3[i].conv2.weight.copy_(save_weight)
+        for i in range(len(self.layer3)):
+            save_weight = self.layer3[i].conv2.weight
             self.layer3[i].conv2 = nn.Conv2d(256,
                                             256,
                                             kernel_size=3,
-                                            stride=s[2] if i==0 else 1, 
+                                            stride=s[2] if i == 0 else 1,
                                             padding=d[2],
-                                            dilation=d[2], 
+                                            dilation=d[2],
                                             bias=False)
+            
             with torch.no_grad():
-                self.layer3[i].conv2.weight.copy_(save_weight)
-
+                self.layer3[i].conv2.weight.copy_(save_weight)    
         save_weight = self.layer4[0].downsample[0].weight
         self.layer4[0].downsample[0] = nn.Conv2d(1024,
                                                 2048,
