@@ -91,7 +91,7 @@ class MaskResnet50(nn.Module):
             assert len(multi_grids) == n_blocks[3]
 
         weights = torchvision.models.ResNet50_Weights.IMAGENET1K_V2
-        resnet = torchvision.models.resnet50(weights= weights,pretrained=True)
+        resnet = torchvision.models.resnet50(weights= weights)
         
         self.stem = nn.Sequential(OrderedDict([
                                                ('conv1',resnet.conv1),
