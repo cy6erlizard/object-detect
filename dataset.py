@@ -202,7 +202,7 @@ class CocoDataset(torchvision.datasets.coco.CocoDetection):
             class_ids.append(class_id)
 
         # Pack instance masks into an array
-        mask = np.stack(instance_masks, axis=2).astype(np.bool)
+        mask = np.stack(instance_masks, axis=2).astype(bool)
         class_ids = np.array(class_ids, dtype=np.int32)
         return mask, class_ids
 
